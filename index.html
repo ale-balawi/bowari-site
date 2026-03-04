@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alex Bowari</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
+      text-align: center;
+      padding: 60px;
+    }
+    a {
+      color: #4ea1ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .card {
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #333;
+      max-width: 500px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #4ea1ff;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Alex Bowari</h1>
+  <p>Student building machine learning + engineering systems.</p>
+
+  <div class="card">
+    <h2>Interactive Demo</h2>
+    <p>Simple counter demo (replace this later with real projects)</p>
+    <button onclick="increase()">Click Me</button>
+    <p id="count">0</p>
+  </div>
+
+  <script>
+    let count = 0;
+    function increase() {
+      count++;
+      document.getElementById("count").innerText = count;
+    }
+  </script>
+
+</body>
+</html>
