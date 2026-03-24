@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alex Bowari</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -16,11 +16,11 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #0d0d0d;
+      background: radial-gradient(circle at top, #111 0%, #0a0a0a 100%);
       color: #eaeaea;
       line-height: 1.6;
       padding: 40px 20px;
-      max-width: 900px;
+      max-width: 1100px;
       margin: auto;
     }
 
@@ -28,7 +28,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 60px;
+      margin-bottom: 80px;
     }
 
     nav a {
@@ -43,61 +43,150 @@
       color: white;
     }
 
+    .hero {
+      margin-bottom: 80px;
+    }
+
     h1 {
-      font-size: 2.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
       margin-bottom: 10px;
     }
 
     .subtitle {
       color: #888;
-      margin-bottom: 60px;
       font-size: 1.1rem;
+      max-width: 600px;
     }
 
     .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 25px;
+      color: #666;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+    }
+
+    .featured {
+      padding: 40px;
+      border-radius: 18px;
+      margin-bottom: 60px;
+      background: linear-gradient(145deg, #111, #0c0c0c);
+      border: 1px solid #2a2a2a;
+      position: relative;
+      overflow: hidden;
+      transition: 0.25s ease;
+    }
+
+    .featured::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(78,161,255,0.15), transparent 60%);
+      opacity: 0;
+      transition: 0.4s ease;
+    }
+
+    .featured:hover::before {
+      opacity: 1;
+    }
+
+    .featured:hover {
+      transform: translateY(-5px);
+      border-color: #4ea1ff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .featured h2 {
+      font-size: 1.7rem;
+      margin-bottom: 10px;
+    }
+
+    .featured p {
+      color: #aaa;
+      margin-bottom: 18px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin-right: 12px;
+      padding: 9px 15px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.2s ease;
+    }
+
+    .primary {
+      background: #4ea1ff;
+      color: black;
+    }
+
+    .primary:hover {
+      background: #6bb3ff;
+    }
+
+    .secondary {
+      border: 1px solid #333;
+      color: #ccc;
+    }
+
+    .secondary:hover {
+      border-color: #666;
+      color: white;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
     }
 
     .project {
       padding: 25px;
+      border-radius: 14px;
+      background: #0f0f0f;
       border: 1px solid #1f1f1f;
-      border-radius: 10px;
-      margin-bottom: 20px;
       transition: 0.2s ease;
+      position: relative;
     }
 
     .project:hover {
+      transform: translateY(-4px);
       border-color: #333;
-      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .project h3 {
       margin-bottom: 8px;
+      font-size: 1.1rem;
     }
 
     .project p {
       color: #aaa;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
     }
 
     .project a {
       color: #4ea1ff;
       text-decoration: none;
-      font-weight: 500;
+      font-size: 0.9rem;
     }
 
     footer {
-      margin-top: 80px;
+      margin-top: 100px;
       color: #666;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
 
   <nav>
@@ -109,52 +198,59 @@
     </div>
   </nav>
 
-  <h1>Alex Bowari</h1>
-  <p class="subtitle">
-    Inventor, Programmer, Student
-  </p>
+  <section class="hero">
+    <h1>Alex Bowari</h1>
+    <p class="subtitle">
+      Inventor, Programmer, Student
+    </p>
+  </section>
 
-  <div class="section-title">Exclusive Projects</div>
+  <div class="section-title">Featured Project</div>
 
-  <div class="project">
-    <h3>Chronic Kidney Disease Prediction Model</h3>
-    <p>Machine learning algorithm using a neural network predicting chronic kidney disease from patient inputs capable of up to 99% accuracy.</p>
-    <a href="ckd-neural-network.pdf.pdf" target="_blank">Official Paper and Mathematical Explanation → </a>
-    <a href="https://colab.research.google.com/drive/1W0IHX-UXqQvspN0pYQ3hHnPAwhBLDSQ7" target="_blank">         Code →</a>
+  <div class="featured">
+    <h2>Chronic Kidney Disease Prediction Model</h2>
+    <p>
+      Machine learning algorithm using a neural network predicting chronic kidney disease from patient inputs capable of up to 99% accuracy.
+    </p>
+    <div class="buttons">
+      <a class="primary" href="ckd-neural-network.pdf.pdf" target="_blank">Official Paper and Mathematical Explanation</a>
+      <a class="secondary" href="https://colab.research.google.com/drive/1W0IHX-UXqQvspN0pYQ3hHnPAwhBLDSQ7" target="_blank">Code</a>
+    </div>
   </div>
 
-  <div class="project">
-    <h3>Image Generation Diffusion Model</h3>
-    <p>Diffusion model for image generation along with explanations of the forward noise process, brownian motion, stochastic processes, and image reconstruction.</p>
-    <a href="#">Coming Soon →</a>
+  <div class="section-title">Other Projects</div>
+
+  <div class="projects-grid">
+
+    <div class="project">
+      <h3>Image Generation Diffusion Model</h3>
+      <p>
+        Diffusion model for image generation along with explanations of the forward noise process, brownian motion, stochastic processes, and image reconstruction.
+      </p>
+      <a href="#">Coming Soon →</a>
+    </div>
+
+    <div class="project">
+      <h3>Facial Recognition Device</h3>
+      <p>
+        Custom system using Raspberry Pi 5 integrating hardware with live data output through a neural network to recognize faces.
+      </p>
+      <a href="#">Coming Soon →</a>
+    </div>
+
+    <div class="project">
+      <h3>Business Card Scanner App</h3>
+      <p>
+        App designed for Dallas non-profit company "Fighting Homelessness" to optimize an accessible, fast, and easy solution to scan business cards that automatically update to Iphone contacts and save information locally on your device.
+      </p>
+      <a href="#">Coming Soon →</a>
+    </div>
+
   </div>
 
-  <div class="project">
-    <h3>Facial Recognition Device</h3>
-    <p>Custom system using Raspberry Pi 5 integrating hardware with live data output through a neural network to recognize faces.</p>
-    <a href="#">Coming Soon →</a>
-  </div>
-
-  <div class="project">
-    <h3>Business Card Scanner App</h3>
-    <p>App designed for Dallas non-profit company "Fighting Homelessness" to optimize an accessible, fast, and easy solution to scan business cards that automatically update to Iphone contacts and save information locally on your device.</p>
-    <a href="#">Coming Soon →</a>
-  </div>
-  
   <footer>
     Alexander Bowari Class of 2026
   </footer>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
