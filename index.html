@@ -4,253 +4,629 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alex Bowari</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #050508;
+      --surface: #0c0c12;
+      --surface2: #12121a;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(99,179,255,0.35);
+      --accent: #63b3ff;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --text: #f0f0f8;
+      --muted: #6b7280;
+      --muted2: #9ca3af;
+      --glow: rgba(99,179,255,0.15);
     }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top, #111 0%, #0a0a0a 100%);
-      color: #eaeaea;
-      line-height: 1.6;
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── BACKGROUND ORBS ─── */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(120px);
+      opacity: 0.12;
+      z-index: 0;
+    }
+    .bg-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #63b3ff, transparent 70%);
+      top: -200px; left: -150px;
+      animation: orbDrift1 18s ease-in-out infinite alternate;
+    }
+    .bg-orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #a78bfa, transparent 70%);
+      bottom: 100px; right: -100px;
+      animation: orbDrift2 22s ease-in-out infinite alternate;
+    }
+    .bg-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #34d399, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: orbDrift3 14s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbDrift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(60px, 80px) scale(1.15); } }
+    @keyframes orbDrift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-50px, -60px) scale(1.1); } }
+    @keyframes orbDrift3 { from { transform: translate(-50%,-50%) scale(1); } to { transform: translate(-50%,-50%) scale(1.3); } }
+
+    /* ─── GRID LINES ─── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── WRAPPER ─── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ─── NAV ─── */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 80px;
+      padding: 28px 0 0;
+      margin-bottom: 0;
+      animation: fadeDown 0.8s ease both;
     }
 
-    nav a {
-      color: #aaa;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: 500;
-      transition: 0.2s ease;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    .hero {
-      margin-bottom: 80px;
-    }
-
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: #888;
-      font-size: 1.1rem;
-      max-width: 600px;
-    }
-
-    .section-title {
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
       font-size: 0.85rem;
-      margin-bottom: 25px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      border: 1px solid rgba(99,179,255,0.25);
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: rgba(99,179,255,0.04);
     }
 
-    .featured {
-      padding: 40px;
-      border-radius: 18px;
-      margin-bottom: 60px;
-      background: linear-gradient(145deg, #111, #0c0c0c);
-      border: 1px solid #2a2a2a;
-      position: relative;
-      overflow: hidden;
-      transition: 0.25s ease;
-    }
-
-    .featured::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 200%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(78,161,255,0.15), transparent 60%);
-      opacity: 0;
-      transition: 0.4s ease;
-    }
-
-    .featured:hover::before {
-      opacity: 1;
-    }
-
-    .featured:hover {
-      transform: translateY(-5px);
-      border-color: #4ea1ff;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    }
-
-    .featured h2 {
-      font-size: 1.7rem;
-      margin-bottom: 10px;
-    }
-
-    .featured p {
-      color: #aaa;
-      margin-bottom: 18px;
-    }
-
-    .buttons a {
-      display: inline-block;
-      margin-right: 12px;
-      padding: 9px 15px;
-      border-radius: 7px;
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      color: var(--muted2);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: 0.2s ease;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 120px 0 80px;
+      animation: fadeUp 1s ease 0.1s both;
     }
 
-    .primary {
-      background: #4ea1ff;
-      color: black;
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--accent);
     }
 
-    .primary:hover {
-      background: #6bb3ff;
+    .hero-name {
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+      background: linear-gradient(135deg, #ffffff 0%, #a8c8ff 50%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .secondary {
-      border: 1px solid #333;
-      color: #ccc;
+    .hero-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--muted2);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 48px;
     }
 
-    .secondary:hover {
-      border-color: #666;
-      color: white;
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      background: var(--surface);
+      transition: all 0.25s;
+    }
+    .tag:hover {
+      border-color: rgba(99,179,255,0.3);
+      color: var(--accent);
+      background: rgba(99,179,255,0.06);
+    }
+    .tag.highlight {
+      border-color: rgba(99,179,255,0.3);
+      color: var(--accent);
+      background: rgba(99,179,255,0.07);
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 60px;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+    .divider-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(99,179,255,0.2), transparent);
+    }
+
+    /* ─── PROJECTS GRID ─── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
+      gap: 20px;
     }
 
-    .project {
-      padding: 25px;
-      border-radius: 14px;
-      background: #0f0f0f;
-      border: 1px solid #1f1f1f;
-      transition: 0.2s ease;
+    /* Featured project (first one) gets extra prominence */
+    .project-card {
       position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 36px 32px;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      overflow: hidden;
+      cursor: default;
+      animation: fadeUp 0.8s ease both;
     }
 
-    .project:hover {
-      transform: translateY(-4px);
-      border-color: #333;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .project-card:nth-child(1) { animation-delay: 0.35s; }
+    .project-card:nth-child(2) { animation-delay: 0.45s; }
+    .project-card:nth-child(3) { animation-delay: 0.55s; }
+    .project-card:nth-child(4) { animation-delay: 0.65s; }
+
+    .project-card.featured {
+      background: linear-gradient(135deg, #0c0c18 0%, #0f0f1f 100%);
+      border-color: rgba(99,179,255,0.18);
+      padding: 44px;
     }
 
-    .project h3 {
-      margin-bottom: 8px;
-      font-size: 1.1rem;
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(99,179,255,0.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
     }
 
-    .project p {
-      color: #aaa;
-      font-size: 0.9rem;
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99,179,255,0.3);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(99,179,255,0.07);
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-card:hover::after { opacity: 1; }
+
+    /* Glow blob per card */
+    .card-glow {
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      top: -80px; right: -80px;
+    }
+    .project-card:hover .card-glow { opacity: 0.08; }
+    .featured .card-glow { background: #63b3ff; }
+    .project-card:nth-child(2) .card-glow { background: #a78bfa; }
+    .project-card:nth-child(3) .card-glow { background: #34d399; }
+    .project-card:nth-child(4) .card-glow { background: #f59e0b; }
+
+    .card-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-number::after {
+      content: '';
+      flex: 0 0 24px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .badge-live {
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.3);
+      color: #34d399;
+    }
+    .badge-soon {
+      background: rgba(99,179,255,0.07);
+      border: 1px solid rgba(99,179,255,0.2);
+      color: var(--muted2);
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       margin-bottom: 12px;
+      line-height: 1.25;
+      color: var(--text);
+    }
+    .featured .card-title { font-size: 1.65rem; }
+
+    .card-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.84rem;
+      color: var(--muted2);
+      line-height: 1.75;
+      margin-bottom: 28px;
+      max-width: 580px;
     }
 
-    .project a {
-      color: #4ea1ff;
+    .card-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(99,179,255,0.07);
+      border: 1px solid rgba(99,179,255,0.15);
+      border-radius: 6px;
+      padding: 5px 12px;
+      margin-bottom: 24px;
+    }
+    .card-stat-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent3);
+      animation: pulse 2s infinite;
+    }
+
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 9px 20px;
+      border-radius: 8px;
+      transition: all 0.25s;
     }
 
+    .card-link.primary {
+      background: linear-gradient(135deg, rgba(99,179,255,0.15), rgba(167,139,250,0.1));
+      border: 1px solid rgba(99,179,255,0.3);
+      color: var(--accent);
+    }
+    .card-link.primary:hover {
+      background: linear-gradient(135deg, rgba(99,179,255,0.25), rgba(167,139,250,0.2));
+      border-color: rgba(99,179,255,0.5);
+      box-shadow: 0 0 20px rgba(99,179,255,0.15);
+      transform: translateX(3px);
+    }
+
+    .card-link.secondary {
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      background: transparent;
+    }
+    .card-link.secondary:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text);
+      transform: translateX(3px);
+    }
+
+    .card-link.coming-soon {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: transparent;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .arrow { transition: transform 0.2s; }
+    .card-link:hover .arrow { transform: translateX(4px); }
+
+    /* ─── FOOTER ─── */
     footer {
       margin-top: 100px;
-      color: #666;
-      font-size: 0.85rem;
-      text-align: center;
+      padding: 40px 0 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    .footer-left {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .footer-left span { color: var(--muted2); }
+
+    .footer-right {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .wrapper { padding: 0 20px; }
+      .hero { padding: 80px 0 60px; }
+      .project-card, .project-card.featured { padding: 28px; }
+      .card-title { font-size: 1.15rem; }
+      .featured .card-title { font-size: 1.3rem; }
+      nav { flex-direction: column; gap: 16px; align-items: flex-start; }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
-
 <body>
 
-  <nav>
-    <div><strong>AB</strong></div>
-    <div>
-      <a href="#">Projects</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+  <!-- Background effects -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+  <div class="grid-bg"></div>
+
+  <div class="wrapper">
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">AB</div>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="hero-eyebrow">Portfolio</div>
+      <h1 class="hero-name">Alex<br>Bowari</h1>
+      <p class="hero-desc">
+        Inventor · Programmer · Student.<br>
+        Building intelligent systems at the intersection of machine learning, hardware, and real-world impact.
+      </p>
+      <div class="hero-tags">
+        <span class="tag highlight">Machine Learning</span>
+        <span class="tag highlight">Neural Networks</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">Raspberry Pi</span>
+        <span class="tag">Diffusion Models</span>
+        <span class="tag">iOS Development</span>
+        <span class="tag">Class of 2026</span>
+      </div>
+    </section>
+
+    <!-- SECTION LABEL -->
+    <div class="divider" id="projects">
+      <span class="divider-label">Selected Projects</span>
+      <div class="divider-line"></div>
     </div>
-  </nav>
 
-  <section class="hero">
-    <h1>Alex Bowari</h1>
-    <p class="subtitle">
-      Inventor, Programmer, Student
-    </p>
-  </section>
+    <!-- PROJECTS -->
+    <div class="projects-grid">
 
-  <div class="section-title">Featured Project</div>
+      <!-- PROJECT 1 — FEATURED -->
+      <div class="project-card featured">
+        <div class="card-glow"></div>
+        <div class="card-number">01</div>
+        <div class="card-badge badge-live">● Live</div>
+        <h2 class="card-title">Chronic Kidney Disease<br>Prediction Model</h2>
+        <p class="card-desc">
+          A neural network trained on clinical patient data achieving up to 99% predictive accuracy for chronic kidney disease. Includes a full mathematical derivation, forward pass analysis, and loss optimization breakdown.
+        </p>
+        <div class="card-stat">
+          <span class="card-stat-dot"></span>
+          Up to 99% accuracy — clinical-grade precision
+        </div>
+        <div class="card-links">
+          <a class="card-link primary" href="ckd-neural-network.pdf.pdf" target="_blank">
+            Official Paper <span class="arrow">→</span>
+          </a>
+          <a class="card-link secondary" href="https://colab.research.google.com/drive/1W0IHX-UXqQvspN0pYQ3hHnPAwhBLDSQ7" target="_blank">
+            View Code <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
 
-  <div class="featured">
-    <h2>Chronic Kidney Disease Prediction Model</h2>
-    <p>
-      Machine learning algorithm using a neural network predicting chronic kidney disease from patient inputs capable of up to 99% accuracy.
-    </p>
-    <div class="buttons">
-      <a class="primary" href="ckd-neural-network.pdf.pdf" target="_blank">Official Paper and Mathematical Explanation</a>
-      <a class="secondary" href="https://colab.research.google.com/drive/1W0IHX-UXqQvspN0pYQ3hHnPAwhBLDSQ7" target="_blank">Code</a>
+      <!-- PROJECT 2 -->
+      <div class="project-card">
+        <div class="card-glow"></div>
+        <div class="card-number">02</div>
+        <div class="card-badge badge-soon">In Progress</div>
+        <h2 class="card-title">Image Generation Diffusion Model</h2>
+        <p class="card-desc">
+          End-to-end diffusion model for image synthesis — covering the forward noise process, Brownian motion, stochastic differential equations, and learned image reconstruction via denoising.
+        </p>
+        <div class="card-links">
+          <span class="card-link coming-soon">Coming Soon →</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project-card">
+        <div class="card-glow"></div>
+        <div class="card-number">03</div>
+        <div class="card-badge badge-soon">In Progress</div>
+        <h2 class="card-title">Facial Recognition Device</h2>
+        <p class="card-desc">
+          Custom embedded system on a Raspberry Pi 5 that integrates live camera hardware with a trained neural network for real-time face detection and identification.
+        </p>
+        <div class="card-links">
+          <span class="card-link coming-soon">Coming Soon →</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 4 -->
+      <div class="project-card">
+        <div class="card-glow"></div>
+        <div class="card-number">04</div>
+        <div class="card-badge badge-soon">Coming Soon</div>
+        <h2 class="card-title">Business Card Scanner App</h2>
+        <p class="card-desc">
+          iOS app built for Dallas non-profit <em style="color: var(--muted2); font-style:normal;">Fighting Homelessness</em> — instantly scans business cards via OCR, syncs to iPhone Contacts, and stores all data locally on-device with no external servers.
+        </p>
+        <div class="card-links">
+          <span class="card-link coming-soon">Coming Soon →</span>
+        </div>
+      </div>
+
     </div>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="footer-left">
+        <span>Alexander Bowari</span> — Class of 2026
+      </div>
+      <div class="footer-right">
+        <a href="#alexander.bowari@icloud.com" class="footer-link">Email</a>
+      </div>
+    </footer>
+
   </div>
-
-  <div class="section-title">Other Projects</div>
-
-  <div class="projects-grid">
-
-    <div class="project">
-      <h3>Image Generation Diffusion Model</h3>
-      <p>
-        Diffusion model for image generation along with explanations of the forward noise process, brownian motion, stochastic processes, and image reconstruction.
-      </p>
-      <a href="#">Coming Soon →</a>
-    </div>
-
-    <div class="project">
-      <h3>Facial Recognition Device</h3>
-      <p>
-        Custom system using Raspberry Pi 5 integrating hardware with live data output through a neural network to recognize faces.
-      </p>
-      <a href="#">Coming Soon →</a>
-    </div>
-
-    <div class="project">
-      <h3>Business Card Scanner App</h3>
-      <p>
-        App designed for Dallas non-profit company "Fighting Homelessness" to optimize an accessible, fast, and easy solution to scan business cards that automatically update to Iphone contacts and save information locally on your device.
-      </p>
-      <a href="#">Coming Soon →</a>
-    </div>
-
-  </div>
-
-  <footer>
-    Alexander Bowari Class of 2026
-  </footer>
-
 </body>
 </html>
