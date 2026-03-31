@@ -51,7 +51,6 @@
       padding: 0 40px;
     }
 
-    /* NAV */
     nav {
       display: flex;
       justify-content: space-between;
@@ -75,7 +74,6 @@
     }
     .nav-links a:hover { color: var(--text); }
 
-    /* HERO */
     .hero {
       padding: 96px 0 72px;
       border-bottom: 1px solid var(--border);
@@ -135,7 +133,6 @@
       background: #fff8f4;
     }
 
-    /* SECTION HEADER */
     .section-header {
       display: flex;
       align-items: baseline;
@@ -162,7 +159,6 @@
       background: var(--border);
     }
 
-    /* PROJECT CARDS */
     .projects-grid { display: grid; gap: 2px; }
 
     .project-card {
@@ -319,7 +315,6 @@
     .arrow { transition: transform 0.18s; display: inline-block; }
     .card-link:not(.coming-soon):hover .arrow { transform: translateX(3px); }
 
-    /* FOOTER */
     footer {
       margin-top: 80px;
       padding: 36px 0 48px;
@@ -348,7 +343,6 @@
     }
     .footer-link:hover { color: var(--accent-warm); }
 
-    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -390,7 +384,8 @@
       <h1 class="hero-name">Alex<br>Bowari</h1>
       <div class="hero-rule"></div>
       <p class="hero-desc">
-        Inventor · Programmer · Student<br>
+        Inventor · Programmer · Student
+      </p>
       <div class="hero-tags">
         <span class="tag">Machine Learning</span>
         <span class="tag">Neural Networks</span>
@@ -410,25 +405,8 @@
     <div class="projects-grid">
 
       <div class="project-card featured">
-        <div class="project-card">
-          <div class="card-meta">
-            <span class="card-number">01</span>
-            <span class="card-badge badge-live">● Live</span>
-          </div>
-          <h2 class="card-title">Chest X-Ray Generation Diffusion Model</h2>
-          <p class="card-desc">
-            Diffusion model for image synthesis of medical chest x-rays to replicate visual chest diseases in radiology photos: covering the forward noise process, Brownian motion, stochastic calculus, and learned image reconstruction via probabilistic denoising.
-          </p>
-          <div class="card-links">
-          <a class="card-link primary" href="Generating Synthetic Medical Chest X-Ray Images from a Conditional Diffusion Model.pdf" target="_blank">
-            Official Paper <span class="arrow">→</span>
-            <span class="card-link coming-soon">Coming Soon →</span>
-          </div>
-        </div>
-      
-      <div class="project-card featured">
         <div class="card-meta">
-          <span class="card-number">02</span>
+          <span class="card-number">01</span>
           <span class="card-badge badge-live">● Live</span>
         </div>
         <h2 class="card-title">Chronic Kidney Disease Prediction Model</h2>
@@ -444,6 +422,29 @@
             Official Paper <span class="arrow">→</span>
           </a>
           <a class="card-link secondary" href="https://colab.research.google.com/drive/1W0IHX-UXqQvspN0pYQ3hHnPAwhBLDSQ7" target="_blank">
+            View Code <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card featured">
+        <div class="card-meta">
+          <span class="card-number">02</span>
+          <span class="card-badge badge-live">● Live</span>
+        </div>
+        <h2 class="card-title">Chest X-Ray Generation Diffusion Model</h2>
+        <p class="card-desc">
+          A conditional probabilistic diffusion model trained to generate synthetic medical chest X-rays across multiple disease states. Includes mathematical derivations of the forward noising process, reverse denoising process, ELBO-based loss simplification, stochastic calculus foundations, and conditioned image synthesis.
+        </p>
+        <div class="card-stat">
+          <span class="card-stat-dot"></span>
+          Conditional medical image synthesis — diffusion-based generation
+        </div>
+        <div class="card-links">
+          <a class="card-link primary" href="Generating Synthetic Medical Chest X-Ray Images from a Conditional Diffusion Model.pdf" target="_blank">
+            Official Paper <span class="arrow">→</span>
+          </a>
+          <a class="card-link secondary" href="YOUR_CODE_LINK_HERE" target="_blank">
             View Code <span class="arrow">→</span>
           </a>
         </div>
